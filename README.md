@@ -1,9 +1,57 @@
 # comparecsv
 
-Two scripts:
+Three scripts:
 
-- **`compare_csv.py`** — finds every difference between two CSV files.
-- **`export_report.py`** — renders that difference report as **PDF** and **PNG**.
+- **`run_compare.py`** — **start here.** Runs everything and files the results in
+  a timestamped folder.
+- `compare_csv.py` — finds every difference between two CSV files.
+- `export_report.py` — renders that difference report as PDF and PNG.
+
+## The one command to run
+
+```bash
+python3 run_compare.py A.CSV B.CSV
+```
+
+Every output lands in a fresh folder named for the moment it ran, so earlier
+runs are never overwritten:
+
+```
+results/
+  20260816-154602/
+    summary.txt        full console summary of the comparison
+    差分レポート.csv     every difference, one row per differing cell
+    差分レポート.pdf     printable report
+    差分レポート.png     shareable image
+```
+
+For your files:
+
+```bash
+python3 run_compare.py "20260717-0942-都市ガス遅延金一覧表.CSV" "遅延計算結果_20260717.csv"
+```
+
+### Options
+
+| Option | Purpose |
+|---|---|
+| `--label TEXT` | Append a note to the folder name → `20260816-154602_7月分` |
+| `--outdir DIR` | Parent folder for runs (default `results`) |
+| `--name NAME` | Base name for output files (default `差分レポート`) |
+| `--title TEXT` | Heading on the PDF/PNG (default `CSV差分レポート`) |
+| `--no-pdf` / `--no-png` | Skip either rendering |
+| `-q`, `--quiet` | Print only the result and paths; `summary.txt` stays complete |
+
+It also accepts the comparison options `--key`, `--ignore-kind`, `--ignore-cols`,
+`--encoding`, `--delimiter`, and the layout options `--orientation`, `--max-rows`,
+passing them through. Exit codes match `compare_csv.py`: `0` identical, `1`
+differences found, `2` error.
+
+Two runs in the same second get `-2`, `-3` suffixes rather than clobbering each
+other. `results/` is git-ignored.
+
+The rest of this document describes the two underlying scripts, which you can
+still run individually.
 
 ---
 
@@ -155,12 +203,8 @@ python3 export_report.py 差分レポート.csv --pdf out.pdf --png out.png \
     --title "都市ガス遅延金 CSV差分レポート"
 ```
 
-The full routine, from raw files to PDF + PNG:
-
-```bash
-python3 compare_csv.py A.CSV B.CSV --report 差分レポート.csv
-python3 export_report.py 差分レポート.csv --title "CSV差分レポート"
-```
+(`run_compare.py` does this step for you — use it unless you want the pieces
+separately.)
 
 The rendered document shows summary cards (total / substantive / cosmetic, plus
 a count per kind), a legend explaining each kind, and the difference table with
@@ -175,6 +219,7 @@ space. Summary counts always reflect the **whole** report, even when
 |---|---|
 | `--pdf PATH` / `--png PATH` | Output paths (default: alongside the input) |
 | `--title TEXT` | Document heading |
+| `--subtitle TEXT` | Line under the heading — used to name the compared files |
 | `--orientation` | `landscape` (default) or `portrait` |
 | `--max-rows N` | Cap on rendered table rows (default 400) |
 | `--width N` | PNG width in CSS px (default 1500) |

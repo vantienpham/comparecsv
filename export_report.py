@@ -174,8 +174,11 @@ def build_html(header, rows, opts, source, truncated, all_rows=None):
              f"<h1>{html.escape(opts.title)}</h1>"]
 
     stamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-    parts.append(f'<div class="sub">Source: <code>{html.escape(os.path.basename(source))}'
-                 f"</code> &nbsp;·&nbsp; generated {stamp}</div>")
+    if opts.subtitle:
+        origin = html.escape(opts.subtitle)
+    else:
+        origin = f"Source: <code>{html.escape(os.path.basename(source))}</code>"
+    parts.append(f'<div class="sub">{origin} &nbsp;·&nbsp; generated {stamp}</div>')
 
     if diff_mode:
         kinds = {}
@@ -286,6 +289,8 @@ def main(argv=None):
     p.add_argument("--pdf", metavar="PATH", help="PDF output path")
     p.add_argument("--png", metavar="PATH", help="PNG output path")
     p.add_argument("--title", default="CSV Difference Report")
+    p.add_argument("--subtitle", default="",
+                   help="line under the title; use it to name the compared files")
     p.add_argument("--orientation", choices=["landscape", "portrait"],
                    default="landscape", help="PDF page orientation")
     p.add_argument("--max-rows", type=int, default=400,
