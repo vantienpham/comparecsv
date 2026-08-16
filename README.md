@@ -1,5 +1,12 @@
 # comparecsv
 
+Two scripts:
+
+- **`compare_csv.py`** — finds every difference between two CSV files.
+- **`export_report.py`** — renders that difference report as **PDF** and **PNG**.
+
+---
+
 `compare_csv.py` finds **every** difference between two CSV files.
 
 It answers exactly the three questions you need:
@@ -128,6 +135,68 @@ if python3 compare_csv.py A.CSV B.CSV -q; then
 else
     echo "Differences found - check the report"
 fi
+```
+
+---
+
+## Exporting to PDF and PNG
+
+`export_report.py` turns the CSV report into a styled, colour-coded document.
+
+```bash
+python3 export_report.py 差分レポート.csv
+```
+
+With no output paths given it writes `差分レポート.pdf` and `差分レポート.png`
+next to the input. To control them explicitly:
+
+```bash
+python3 export_report.py 差分レポート.csv --pdf out.pdf --png out.png \
+    --title "都市ガス遅延金 CSV差分レポート"
+```
+
+The full routine, from raw files to PDF + PNG:
+
+```bash
+python3 compare_csv.py A.CSV B.CSV --report 差分レポート.csv
+python3 export_report.py 差分レポート.csv --title "CSV差分レポート"
+```
+
+The rendered document shows summary cards (total / substantive / cosmetic, plus
+a count per kind), a legend explaining each kind, and the difference table with
+A-values in blue, B-values in orange, and a colour-coded kind badge per row.
+Blank cells are marked *(blank)* so a missing value is never confused with a
+space. Summary counts always reflect the **whole** report, even when
+`--max-rows` clips the displayed table.
+
+### Options
+
+| Option | Purpose |
+|---|---|
+| `--pdf PATH` / `--png PATH` | Output paths (default: alongside the input) |
+| `--title TEXT` | Document heading |
+| `--orientation` | `landscape` (default) or `portrait` |
+| `--max-rows N` | Cap on rendered table rows (default 400) |
+| `--width N` | PNG width in CSS px (default 1500) |
+| `--scale N` | PNG device scale factor (default 2.0, i.e. retina) |
+| `--encoding ENC` | Force input encoding (default: auto-detect) |
+| `--browser PATH` | Path to Chrome/Chromium |
+| `--keep-html PATH` | Also save the intermediate HTML |
+
+### Requirements
+
+Rendering uses **Google Chrome or Chromium** headlessly — already present on
+this machine, and found automatically. Japanese text renders correctly via the
+installed `Noto Sans CJK JP` font.
+
+The PDF is A4 with the table header repeated on every page. The PNG is a single
+full-height image, auto-cropped to the content.
+
+`export_report.py` also renders any ordinary CSV as a plain table, so it works
+as a general CSV-to-PDF/PNG tool:
+
+```bash
+python3 export_report.py any_table.csv --title "My table"
 ```
 
 ---
