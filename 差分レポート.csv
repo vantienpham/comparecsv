@@ -1,0 +1,20 @@
+﻿row,key,line_in_A,line_in_B,column_no,column_name,value_in_A,value_in_B,diff_kind,kind_meaning
+1,,2,2,7,ステータス,廃止手続中,,missing,"value present in one file, blank in the other"
+2,,3,3,7,ステータス,廃止手続中,,missing,"value present in one file, blank in the other"
+3,,4,4,7,ステータス,廃止手続中,,missing,"value present in one file, blank in the other"
+4,,5,5,7,ステータス,廃止手続中,,missing,"value present in one file, blank in the other"
+5,,6,6,7,ステータス,廃止手続中,,missing,"value present in one file, blank in the other"
+6,,7,7,7,ステータス,廃止手続中,,missing,"value present in one file, blank in the other"
+64,,65,65,7,ステータス,廃止手続中,,missing,"value present in one file, blank in the other"
+68,,69,69,7,ステータス,廃止手続中,,missing,"value present in one file, blank in the other"
+86,,87,87,7,ステータス,廃止手続中,,missing,"value present in one file, blank in the other"
+87,,88,88,7,ステータス,廃止手続中,,missing,"value present in one file, blank in the other"
+93,,94,94,7,ステータス,廃止手続中,,missing,"value present in one file, blank in the other"
+160,,161,161,7,ステータス,廃止手続中,,missing,"value present in one file, blank in the other"
+248,,249,249,13,今回遅延金額,25,24,number,different numeric value
+417,,418,418,13,今回遅延金額,26,23,number,different numeric value
+429,,430,430,6,請求先顧客名,HOANG THI MY LIEN,ＨＯＡＮＧ　ＴＨＩ　ＭＹ　ＬＩＥＮ,width,"same text, fullwidth vs halfwidth (or other NFKC) form"
+555,,556,556,6,請求先顧客名,ya　lguun,ｙａ　ｌｇｕｕｎ,width,"same text, fullwidth vs halfwidth (or other NFKC) form"
+567,,568,568,6,請求先顧客名,CHAN HAI YING,ＣＨＡＮ　ＨＡＩ　ＹＩＮＧ,width,"same text, fullwidth vs halfwidth (or other NFKC) form"
+568,,569,569,6,請求先顧客名,CHAN HAI YING,ＣＨＡＮ　ＨＡＩ　ＹＩＮＧ,width,"same text, fullwidth vs halfwidth (or other NFKC) form"
+569,,570,570,6,請求先顧客名,CHAN HAI YING,ＣＨＡＮ　ＨＡＩ　ＹＩＮＧ,width,"same text, fullwidth vs halfwidth (or other NFKC) form"
